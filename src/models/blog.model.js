@@ -4,26 +4,45 @@
 */
 
 const mongoose = require("mongoose")
+const blogCategorySchema = new mongoose.Schema({
+    name: {
+        type: String,
+        trim: true,
+        required: true
+    }
+}, {
+    collection: 'blogCategory',
+    timestamps: true
+})
 
+//BLog post
 
-const blogPostSchema = new mongoose.Schema(
-    {
-        //_id
-        //categoryId   
-        title: {
-            type: String,
-            trim: true,
-            required: true
-        },
-        content: {
-            type: String,
-            trim: true,
-            required: true
-        }
-        //  createdAt, kendi yapiyo 
-        //  updatedAt
-
+const blogPostSchema = new mongoose.Schema({
+    blogCategoryId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'BlogCategory',
+        required: true
     },
+
+    //_id
+    //categoryId   
+    title: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    content: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    published: {
+        type: Boolean,
+        default: true
+    }
+    //  createdAt, kendi yapiyo 
+    //  updatedAt
+},
     {
         collection: "blogPost",
         timestamps: true
@@ -38,9 +57,10 @@ const blogPostSchema = new mongoose.Schema(
 // }
 
 module.exports = {
+    BlogCategory: mongoose.model('BlogCategory', blogCategorySchema),
     BlogPost: mongoose.model('BlogPost', blogPostSchema)
-
 }
+
 
 
 

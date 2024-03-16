@@ -17,7 +17,7 @@ const PORT = process.env.PORT
 const HOST = process.env.HOST
 
 // /* DB connection  */
-// require('./src/dbConnection') // dotenv çalıştıktan sonra 
+require('./src/configs/dbConnection') // dotenv çalıştıktan sonra 
 
 app.all('/', (req, res) => {
     res.send('WELCOME BLOG API PROJECT')
@@ -25,6 +25,8 @@ app.all('/', (req, res) => {
 
 app.use('/blog', require("./src/routes/blog.route"))
 
-app.use(require('./src/errorHandler')) // aşağıda kalsın
+app.use(require('./src/middlewares/errorHandler')) // aşağıda kalsın
 
 app.listen(PORT, () => console.log(` Server Running on http://${HOST}:${PORT}`))
+
+//require('./src/sync')() //bi kere calistiysa artik yoruma almamiz gerek 1 kere calismasi yeterli
